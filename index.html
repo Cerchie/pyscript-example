@@ -1,0 +1,39 @@
+<html>
+    <head>
+      <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+      <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    </head>
+
+  <body>
+    <h1>Polygons are fun! Use the number of sides to calculate the radians.</h1>
+
+    <b><p>Radians: <u><label id='number1'></label></u></p></b>
+
+    <span><input id="input_number" placeholder="enter number of sides here" type="text" style="background:lightcyan"></span>
+  </input>
+    <py-script>
+import math
+from pyodide import create_proxy
+
+class Regular_Polygons:
+    def __init__(self, n):
+        self.n = n
+        
+    def radians(self):
+        num = int(self.n)
+        answer = (num-2)*math.pi/num
+        return answer
+   
+    def _on_enter(*args, **kwargs):
+        input_number = document.querySelector("#input_number")
+        regular_polygons_instance = Regular_Polygons(input_number.value)
+        pyscript.write('number1', regular_polygons_instance.radians())
+
+    on_enter = create_proxy(_on_enter)
+    document.getElementById("input_number").addEventListener("change", on_enter)
+
+    </py-script>
+
+  </body>
+
+</html>
